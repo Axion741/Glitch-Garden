@@ -17,8 +17,10 @@ public class MusicManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         audioSource = GetComponent<AudioSource>();
-     
-	}
+       //set volume to saved preference on start
+        audioSource.volume = PlayerPrefsManager.GetMasterVolume();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
