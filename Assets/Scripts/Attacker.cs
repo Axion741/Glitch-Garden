@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Attacker : MonoBehaviour {
-
-    [Range (-1f, 1.5f)]
-    public float currentSpeed;
+    private Animator anim;
+   
+    private float currentSpeed;
+    private GameObject currentTarget;
 
 	// Use this for initialization
 	void Start () {
-        Rigidbody2D myRigidbody = gameObject.AddComponent<Rigidbody2D>();
-        myRigidbody.isKinematic = true;
+        anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         transform.Translate(Vector3.left * currentSpeed * Time.deltaTime);
+        if (!currentTarget)
+        {
+            anim.SetBool("isAttacking", false);
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,8 +32,23 @@ public class Attacker : MonoBehaviour {
         currentSpeed = speed;
     }
 
+    //called from animator at attack
     public void StrikeCurrentTarget (float damage)
     {
-        Debug.Log(name + " is attacking for " + damage + " damage");
+        if (currentTarget)
+        {
+            Health health = currentTarget.GetComponent<Health>();
+            if (health)
+            {
+                health.DealDamage(damage);
+            }
+        }
+        
+    }
+
+
+    public void Attack (GameObject obj)
+    {
+        currentTarget = obj;
     }
 }
