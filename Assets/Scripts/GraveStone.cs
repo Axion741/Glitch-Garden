@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class GraveStone : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	//only used as a tag for now
+
 }
