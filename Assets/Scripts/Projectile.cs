@@ -17,9 +17,31 @@ public class Projectile : MonoBehaviour {
         transform.Translate(Vector3.right * Speed *  Time.deltaTime);
 	}
 
-    private void OnBecameInvisible()
+    private void ProjectileStrike ()
     {
-        Destroy(gameObject);
+        
     }
+
+    private void OnTriggerEnter2D(Collider2D impact)
+    {
+        GameObject collidedobject = impact.gameObject;
+
+        //leave method if not colliding with attacker
+        if (!collidedobject.GetComponent<Attacker>())
+        {
+            return;
+        }
+        else
+        {
+            Health health = collidedobject.GetComponent<Health>();
+            if (health)
+            {
+                health.DealDamage(Damage);
+            }
+            Destroy(gameObject);
+        }                
+    }
+
+    
 }
 
